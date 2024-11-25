@@ -1,6 +1,6 @@
 # coding=utf-8
 from discord.ext import commands
-from discord import app_commands, Interaction
+from discord import app_commands, Interaction , File
 import json
 import asyncio
 
@@ -58,8 +58,7 @@ class pork(commands.Cog):
             message_2 = self.find_reply("/reply", code, 2.0)
             if message_2["額外回應(比如影片/圖片之類的)"]:
                 video_path = f'DC_驛站後影片/{message_2["額外回應(比如影片/圖片之類的)"]}'  # 替換為影片檔案的路徑
-                with open(video_path, "rb") as video_file:
-                    await interaction.user.send(file=video_file)
+                await interaction.user.send(file=File(video_path))
             await asyncio.sleep(5)    # 等待    
             await interaction.user.send(content=message_2["助手AI霸姬 回應"])
             
