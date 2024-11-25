@@ -23,6 +23,16 @@ class pork(commands.Cog):
     def save_json(self, filepath, data):
         with open(filepath, 'a', encoding='utf-8') as file:
             json.dump(data, file, ensure_ascii=False, indent=4)
+            
+    def find_reply(self, command, code, order = None):
+        if not order:
+            for item in self.msg:
+                if item["輸入指令"] == command and item["參數"] == code:        
+                    return item
+        else:
+            for item in self.msg:
+                if item["輸入指令"] == command and item["參數"] == code and item["訊息發送順序"] == order:        
+                    return item
     
     def record_user_action(self, user_id, command, code=None):
         if user_id not in self.user_data:
@@ -40,74 +50,53 @@ class pork(commands.Cog):
     @app_commands.command(description='回復指令')
     async def reply(self, interaction: Interaction, code: str = None):
         if code == "我懂了":
-            message = [
-                item for item in self.msg
-                if item["輸入指令"] == "\/reply" and item["參數"] == "我懂了" and item["訊息發送順序"] == 1.0
-            ]
+            message=self.find_reply("/reply", code ,1.0)
             await interaction.user.send(content=message["助手AI霸姬 回應"])
-            if message["額外回應(比如影片\/圖片之類的)"]:
-                await interaction.user.send(content=message["額外回應(比如影片\/圖片之類的)"])
+            if message["額外回應(比如影片/圖片之類的)"]:
+                await interaction.user.send(content=message["額外回應(比如影片/圖片之類的)"])
             
-            message_2 = [
-                item for item in self.msg
-                if item["輸入指令"] == "\/reply" and item["參數"] == "我懂了" and item["訊息發送順序"] == 2.0
-            ]
+            message_2 = self.find_reply("/reply", code, 2.0)
             await asyncio.sleep(2)    # 等待    
             await interaction.user.send(content=message_2["助手AI霸姬 回應"])
-            if message_2["額外回應(比如影片\/圖片之類的)"]:
-                await interaction.user.send(content=message_2["額外回應(比如影片\/圖片之類的)"])
+            if message_2["額外回應(比如影片/圖片之類的)"]:
+                await interaction.user.send(content=message_2["額外回應(比如影片/圖片之類的)"])
             
-            message_3 = [
-                item for item in self.msg
-                if item["輸入指令"] == "\/reply" and item["參數"] == "我懂了" and item["訊息發送順序"] == 3.0
-            ]
+            message_3 = self.find_reply("/reply", code, 3.0)
             await asyncio.sleep(2)    # 等待    
             await interaction.user.send(content=message_3["助手AI霸姬 回應"])
-            if message_3["額外回應(比如影片\/圖片之類的)"]:
-                await interaction.user.send(content=message_3["額外回應(比如影片\/圖片之類的)"])
+            if message_3["額外回應(比如影片/圖片之類的)"]:
+                await interaction.user.send(content=message_3["額外回應(比如影片/圖片之類的)"])
             print(message,message_2,message_3)
         else:
-            message = [
-                item for item in self.msg
-                if item["輸入指令"] == "\/reply" and item["參數"] == code
-            ]
+            message = self.find_reply("/reply", code)
             print(message)
             
             if message:
                 await interaction.user.send(content=message["助手AI霸姬 回應"])
                 
-                if message["額外回應(比如影片\/圖片之類的)"]:
-                    await interaction.user.send(content=message["額外回應(比如影片\/圖片之類的)"])
+                if message["額外回應(比如影片/圖片之類的)"]:
+                    await interaction.user.send(content=message["額外回應(比如影片/圖片之類的)"])
      
         self.record_user_action(interaction.user.id, 'reply', code)
     
     @app_commands.command(description='開始遊戲')
     async def start(self, interaction: Interaction):
-        message_1 = [
-            item for item in self.msg
-            if item["輸入指令"] == "\/start" and item["訊息發送順序"] == 1.0
-        ]
-        message_2 = [
-            item for item in self.msg
-            if item["輸入指令"] == "\/start" and item["訊息發送順序"] == 2.0
-        ]
-        message_3 = [
-            item for item in self.msg
-            if item["輸入指令"] == "\/start" and item["訊息發送順序"] == 3.0
-        ]
+        message_1 = self.find_reply("/start", None ,1.0)
+        message_2 = self.find_reply("/start", None ,2.0)
+        message_3 = self.find_reply("/start", None ,3.0)
         print(message_1,message_2,message_3)
         
         await interaction.response.send_message(f"玩家{interaction.user.name} 已經加入了遊戲")
         # 回應初始訊息
         await interaction.user.send(content=message_1["助手AI霸姬 回應"])
-        await interaction.user.send(content=message_1["額外回應(比如影片\/圖片之類的)"])       
+        await interaction.user.send(content=message_1["額外回應(比如影片/圖片之類的)"])       
         await asyncio.sleep(2)    # 等待    
         # 發送第二個訊息
         await interaction.user.send(content=message_2["助手AI霸姬 回應"])
         await asyncio.sleep(2)  # 等待  
         # 發送第三個訊息
         await interaction.user.send(content=message_3["助手AI霸姬 回應"])
-        await interaction.user.send(content=message_3["額外回應(比如影片\/圖片之類的)"])
+        await interaction.user.send(content=message_3["額外回應(比如影片/圖片之類的)"])
 
 
 
