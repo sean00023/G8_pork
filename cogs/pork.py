@@ -30,11 +30,11 @@ class pork(commands.Cog):
         self.user_data[user_id].append({'command': command, 'code': code})
         self.save_json(self.user_cache_path, self.user_data)
         
-    @app_commands.command()
-    @app_commands.user_install()
-    async def my_user_install_command(self, interaction: Interaction) -> None:
-        print(f"玩家{interaction.user.name}已經加入了遊戲")
-        await interaction.user.send(content=self.msg["start"])
+    # @app_commands.command()
+    # @app_commands.user_install()
+    # async def my_user_install_command(self, interaction: Interaction) -> None:
+    #     print(f"玩家{interaction.user.name}已經加入了遊戲")
+    #     await interaction.user.send(content=self.msg["start"])
     
         
     @app_commands.command(description='回復指令')
