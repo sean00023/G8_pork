@@ -65,11 +65,13 @@ class pork(commands.Cog):
             await interaction.user.send(content=message_3["助手AI霸姬 回應"])
             if message_3["額外回應(比如影片\/圖片之類的)"]:
                 await interaction.user.send(content=message_3["額外回應(比如影片\/圖片之類的)"])
+            print(message,message_2,message_3)
         else:
             message = [
                 item for item in self.msg
                 if item["輸入指令"] == "\/reply" and item["參數"] == code
             ]
+            print(message)
             
             if message:
                 await interaction.user.send(content=message["助手AI霸姬 回應"])
@@ -93,6 +95,7 @@ class pork(commands.Cog):
             item for item in self.msg
             if item["輸入指令"] == "\/start" and item["訊息發送順序"] == 3.0
         ]
+        print(message_1,message_2,message_3)
         
         await interaction.response.send_message(f"玩家{interaction.user.name} 已經加入了遊戲")
         # 回應初始訊息
