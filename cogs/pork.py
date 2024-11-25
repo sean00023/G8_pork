@@ -1,6 +1,6 @@
 # coding=utf-8
 from discord.ext import commands
-from discord import app_commands, Interaction , Embed
+from discord import app_commands, Interaction
 import json
 import asyncio
 
@@ -53,19 +53,19 @@ class pork(commands.Cog):
             message=self.find_reply("/reply", code ,1.0)
             await interaction.user.send(content=message["助手AI霸姬 回應"])
             if message["額外回應(比如影片/圖片之類的)"]:
-                await interaction.user.send(embed=Embed(url=message["額外回應(比如影片/圖片之類的)"]))
+                await interaction.user.send(content=message["額外回應(比如影片/圖片之類的)"])
             
             message_2 = self.find_reply("/reply", code, 2.0)
-            await asyncio.sleep(3)    # 等待    
+            await asyncio.sleep(5)    # 等待    
             await interaction.user.send(content=message_2["助手AI霸姬 回應"])
             if message_2["額外回應(比如影片/圖片之類的)"]:
-                await interaction.user.send(embed=Embed(url=message_2["額外回應(比如影片/圖片之類的)"]))
+                await interaction.user.send(content=message_2["額外回應(比如影片/圖片之類的)"])
             
             message_3 = self.find_reply("/reply", code, 3.0)
-            await asyncio.sleep(3)    # 等待    
+            await asyncio.sleep(5)    # 等待    
             await interaction.user.send(content=message_3["助手AI霸姬 回應"])
             if message_3["額外回應(比如影片/圖片之類的)"]:
-                await interaction.user.send(embed=Embed(url=message_3["額外回應(比如影片/圖片之類的)"]))
+                await interaction.user.send(content=message_3["額外回應(比如影片/圖片之類的)"])
             # print(message,message_2,message_3)
         else:
             message = self.find_reply("/reply", code)
@@ -93,10 +93,10 @@ class pork(commands.Cog):
         # 回應初始訊息
         await interaction.user.send(content=message_1["助手AI霸姬 回應"])
         await interaction.user.send(content=message_1["額外回應(比如影片/圖片之類的)"])       
-        await asyncio.sleep(3)    # 等待    
+        await asyncio.sleep(5)    # 等待    
         # 發送第二個訊息
         await interaction.user.send(content=message_2["助手AI霸姬 回應"])
-        await asyncio.sleep(3)  # 等待  
+        await asyncio.sleep(5)  # 等待  
         # 發送第三個訊息
         await interaction.user.send(content=message_3["助手AI霸姬 回應"])
         await interaction.user.send(content=message_3["額外回應(比如影片/圖片之類的)"])
