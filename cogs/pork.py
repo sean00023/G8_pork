@@ -57,7 +57,7 @@ class pork(commands.Cog):
             
             message_2 = self.find_reply("/reply", code, 2.0)
             if message_2["額外回應(比如影片/圖片之類的)"]:
-                embed = Embed(title="神秘訊息", description=message_2["額外回應(比如影片/圖片之類的)"])
+                embed = Embed(title="神秘訊息", url=message_2["額外回應(比如影片/圖片之類的)"])
                 await interaction.user.send(embed=embed)
             await asyncio.sleep(5)    # 等待    
             await interaction.user.send(content=message_2["助手AI霸姬 回應"])
@@ -82,7 +82,7 @@ class pork(commands.Cog):
                 # print(message)
                 await interaction.user.send(content=message["助手AI霸姬 回應"])
         self.record_user_action(interaction.user.id, 'reply', code)
-        await interaction.response()
+        await interaction.response.send_message(content="已發送訊息!",ephemeral=True)
         
     @app_commands.command(description='開始遊戲')
     async def start(self, interaction: Interaction):
@@ -102,7 +102,7 @@ class pork(commands.Cog):
         # 發送第三個訊息
         await interaction.user.send(content=message_3["助手AI霸姬 回應"])
         await interaction.user.send(content=message_3["額外回應(比如影片/圖片之類的)"])
-        await interaction.response()
+        await interaction.response.send_message(content="已發送訊息!",ephemeral=True)
 
 
 
