@@ -49,6 +49,7 @@ class pork(commands.Cog):
         
     @app_commands.command(description='回復指令')
     async def reply(self, interaction: Interaction, code: str):
+        await interaction.response.send_message(content="發送訊息!",ephemeral=True)
         if code == "我懂了" or code == "LOOK" or code == "GAME" or code == "HAND":
             message=self.find_reply("/reply", code ,1.0)
             await interaction.user.send(content=message["助手AI霸姬 回應"])
@@ -81,7 +82,6 @@ class pork(commands.Cog):
                 # print(message)
                 await interaction.user.send(content=message["助手AI霸姬 回應"])
         self.record_user_action(interaction.user.id, 'reply', code)
-        await interaction.response.send_message(content="已發送訊息!",ephemeral=True)
         
     @app_commands.command(description='開始遊戲')
     async def start(self, interaction: Interaction):
